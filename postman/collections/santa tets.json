@@ -23,7 +23,9 @@
 							"pm.test(\"User id is correct\", function () {",
 							"    pm.expect(resp.id).to.eq(Number(environment.userID))",
 							"})",
-							"",
+							"pm.test(\"User id is correct\", function () {",
+							"    pm.expect(resp.accountType).to.eq(\"email\")",
+							"})",
 							"",
 							""
 						],
