@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "bf9aaad8-c331-4c18-9133-50d5c71d9c1b",
+		"name": "santa tets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "21611409-bf9aaad8-c331-4c18-9133-50d5c71d9c1b"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "42d816a1-8c7d-432a-abc5-3dfc35db238c",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"pm.test(\"status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"User id is correct\", function () {",
+							"    pm.expect(resp.id).to.eq(Number(environment.userID))",
+							"})",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "beae9900-720b-4c46-9816-fee5b7a91af1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"{{userEmail}}\", \"password\":\"{{userPassword}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "93d243b9-87f0-4468-ba57-2b0529c95512",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"pm.test(\"status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const requestJson = JSON.parse(request.data)",
+							"pm.environment.set(\"userPassword\", requestJson.password)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "1ffaef6a-ed83-4e92-996f-530d1ac6778b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\":\"{{$randomPassword}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/account/password",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"account",
+						"password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "second login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51d41be4-5c2a-439f-a87b-72d4401e61e4",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"pm.test(\"status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"User id is correct\", function () {",
+							"    pm.expect(resp.id).to.eq(Number(environment.userID))",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "25a1904d-53a8-4f2a-8ff4-ae749c3b24fd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"{{userEmail}}\", \"password\":\"{{userPassword}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invalid login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "12dcd1c3-8fc3-4c4d-8b9d-a345a389b5c9",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"pm.test(\"status code is 400\", function () {",
+							"    pm.response.to.have.status(400)",
+							"})",
+							"",
+							"pm.test(\"User id is correct\", function () {",
+							"    pm.expect(resp.error.message).to.eq(\"INVALID_USERNAME_OR_PASSWORD\")",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "4162513a-beeb-4f8f-a369-8f148f52c3e5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"{{userEmail}}\", \"password\":\"{{initialPassword}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password to initial",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "41ad1afe-3799-4ac5-80ea-ea2df3ca8556",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"pm.test(\"status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const requestJson = JSON.parse(request.data)",
+							"pm.environment.set(\"userPassword\", requestJson.password)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "5f8f6a4e-fd3d-4788-a1f3-e0150c4da60d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\":\"{{initialPassword}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/account/password",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"account",
+						"password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18ec1104-a72e-46cf-b8c5-f679530fa5c9",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"pm.test(\"status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"User id is correct\", function () {",
+							"    pm.expect(resp.id).to.eq(Number(environment.userID))",
+							"})",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "03fb49ff-a65d-4f6e-a17c-ffb3f0be8ce3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"{{userEmail}}\", \"password\":\"{{initialPassword}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b01a1171-f35f-47ff-a2ed-77cd59680e9c",
+						"exec": [
+							"const resp = pm.response.json();",
+							"",
+							"pm.test(\"status code is 200\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "384eee1a-b2f7-41e8-8d8f-40afcbe6a9f8",
+						"exec": [
+							"pm.collectionVariables.set(\"boxName\", \"boxNameGenerated + {{$randomBsNoun}}\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "9a9ea651-aa16-4154-a23c-8c4f60aad8df",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": null,\n    \"name\": \"{{boxName}}\",\n    \"key\": \"postman\",\n    \"picture\": \"cookie_star\",\n    \"usePost\": false,\n    \"useCashLimit\": null,\n    \"cashLimit\": null,\n    \"cashLimitCurrency\": null,\n    \"useWish\": true,\n    \"useCircleDraw\": null,\n    \"isInviteAfterDraw\": null,\n    \"isArchived\": null,\n    \"createAdminCard\": null,\n    \"isCreated\": true,\n    \"useNames\": true,\n    \"isPhoneRequired\": false,\n    \"logo\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/box",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"box"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "e3526ffc-6753-49aa-9319-8bceb7cc6ff6",
+			"key": "boxName",
+			"value": ""
+		}
+	]
+}
